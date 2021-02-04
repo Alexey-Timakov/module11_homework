@@ -1,32 +1,34 @@
 let testArray = [10,11,99,,0,null,NaN,"err",50,"",[123,"123"]];
-let numCount = 0;
-let zeroCount = 0;
-let evenCount = 0;
-let oddCount = 0;
 
-console.log(testArray);
+// console.log(testArray);
 
-for (let i = 0; i < testArray.length; i++){
-    if (!Number.isNaN(testArray[i])) // Можно закомментировать строку, если считаем, что NaN - число. 
-        checkAndCount(i);
-    // console.log(typeof(testArray[i]));
+function checkAndCount(array){
+    let numCount = 0, zeroCount = 0, evenCount = 0, oddCount = 0;
+
+    for (let i = 0; i < array.length; i++) {
+        if (typeof array[i] === 'number' && !isNaN(array[i])) {
+            numCount++;
+            if (array[i] === 0) {
+                zeroCount++;
+            } else if (array[i] % 2 === 0) {
+                evenCount++;
+            } else {
+                oddCount++;
+            }
+        }
+    }
+
+    console.log(`Total elements - ${testArray.length}
+    Number amount - ${numCount}
+    "0" amount - ${zeroCount}
+    Even amount - ${evenCount}
+    Odd amount - ${oddCount}`);
 }
 
-// Функция проверки типа на "number" и подсчета количества элементов
-function checkAndCount(item){
-    let tempValue = testArray[item];
-    switch (typeof(tempValue)){
-        case "number":
-            ++numCount;
-            if (tempValue != 0 && tempValue % 2 == 0) ++evenCount;
-            if (tempValue != 0 && tempValue % 2 != 0) ++oddCount;
-            if (tempValue == 0) ++zeroCount;
-            break;
-    }   
-}
+checkAndCount(testArray);
 
-console.log(`Total elements - ${testArray.length}
-Number amount - ${numCount}
-"0" amount - ${zeroCount}
-Even amount - ${evenCount}
-Odd amount - ${oddCount}`);
+// Задание выполнено не совсем корректно, есть несколько важных замечаний к коду:
+// 1. Основной смысл использования функций - в создании универсального кода, т.е. такого, который можно будет легко переиспользовать с различными входными данными. Если сейчас возникнет необходимость использовать другой массив, не testArray, то вам придется переделывать код в нескольких местах, потому что он сильно завязан на конкретный массив. Должно быть так, чтобы вы могли вызвать функцию, которую вы написали, с абсолютно любым массивом в качестве аргумента, и получить корректный результат.
+// 2. Функция checkAndCount тоже не является универсальной, т.к. завязана на конкретный массив (использует переменную testArray) и на другие внешние переменные
+// 3. Вы разделили "отсеивание" нечисловых элементов на 2 части: в одной части кода вы отсекаете значения NaN, а в другой проверяете, чтобы typeof был равен number. Это не влияет на конечный результат, но сильно портит логичность и читабельность кода. Обе этих проверки выполняют по сути одну задачу - выкидывают лишние (нечисловые) элементы массива, поэтому нет никакой необходимости раскидывать их в разные части кода
+// Постаралась исправить в коде вышеописанные ошибки
