@@ -1,9 +1,15 @@
-// let testValue = 0;
-// let testValue = 1;
-// let testValue = 4;
-let testValue = 14;
-// let testValue = 123;
-// let testValue = 997;
+function isNumberSimple(num) {
+    if (num <= 1000 && num >= 0){
+    // Для 0 и 1 определим свое действие через еще одну функцию. Для других чисел вызываем функцию проверки значения:
+        if (num === 0 || num === 1) {
+            resultErrorConsole(num);
+        } else {
+            resultSimpleOrNot(num, checkForSimple(num));
+        }
+    } else {
+        console.log("Ошибка диапазона");
+    }
+}
 
 function checkForSimple(value){
     let simpleStatus = false; //По умолчанию считаем, что число НЕ является простым
@@ -14,9 +20,9 @@ function checkForSimple(value){
         if (simpleStatus) devideCount++;
             // console.log(value, i, simpleStatus, devideCount);
         i++;
-    }while (devideCount < 3 && i <= value);
+    } while (devideCount < 3 && i <= value);
     // console.log(devideCount);
-return devideCount;
+    return devideCount;
 }
 // Для 0 и 1 выдводим сообщение об ошибке
 function resultErrorConsole(value){
@@ -29,17 +35,13 @@ function resultSimpleOrNot(value, result){
     else console.log (`Число ${value} - НЕ является простым`)
 }
 
-if (testValue <=1000 && testValue >= 0){
-// Для 0 и 1 определим свое действие через еще одну функцию. Для других чисел вызываем функцию проверки значения:
-switch(testValue){
-    case 0:
-    case 1:
-        resultErrorConsole(testValue);
-        break;
-    default:
-        resultSimpleOrNot(testValue, checkForSimple(testValue));
-}
-}
-else {
-    console.log("Ошибка диапазона");
-}
+isNumberSimple(0);
+isNumberSimple(1);
+isNumberSimple(15);
+isNumberSimple(137);
+isNumberSimple(1001);
+
+
+// Сама задача решена, но опять же, функция спроектирована неправильно, хотя уже намного лучше, чем в предыдущем задании :) Вам нужно получить универсальную функцию, которую можно вызывать с разными числами. Сейчас, чтобы проверять результат на разных числах, вам приходится постоянно комментировать/раскомментировать значения testValue. Если бы функция была написана правильным образом, вам бы не пришлось этого делать, можно было бы просто передавать разные числа в качестве аргументов.
+// Также при проверке testValue вы используете одновременно 2 логических оператора: switch и if. Так лучше не делать, это усложняет читаемость кода и снова делит одну и ту же операцию (проверку на корректность значения) на 2 смысловые части. Используйте либо switch, либо if. Я бы советовала if в данной ситуации
+// Выше исправила на более правильный вариант
